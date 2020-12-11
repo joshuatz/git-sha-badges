@@ -1,0 +1,16 @@
+{
+  "name": "git-sha-badges",
+  "version": "1.0.0",
+  "main": "index.html",
+  "license": "MIT",
+  "author": {
+    "name": "Joshua Tzucker",
+    "url": "https://joshuatz.com/?utm_source=package"
+  },
+  "scripts": {
+    "save-sha": "git rev-parse --short HEAD | xargs -I % printf '{\"sha\":\"%\"}' > ./build-info.json",
+    "build-badge": "node build-svg.js",
+    "build": "npm run save-sha && npm run build-badge && true",
+    "start": "npm run build && ws"
+  }
+}
