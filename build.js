@@ -20,10 +20,21 @@ const getSvgStrings = (sha) => {
 	};
 };
 
+
+
 // Retrieve SHA from JSON, insert into SVG string, and save as file
-/** @type {{sha: string}} */
-const buildInfo = require('./build-info.json');
+const BUILD_INFO_PATH = './build-info.json';
+/** @type {{sha: string} & Record<string, any>} */
+const buildInfo = require(BUILD_INFO_PATH);
 const compiledBadges = getSvgStrings(buildInfo.sha);
 fs.writeFileSync('./badge-fancy.svg', compiledBadges.fancy);
 fs.writeFileSync('./badge-simple.svg', compiledBadges.simple);
+
+// Add build time to buildInfo file
+const nowMs = Date.now();
+buildInfo.buildTimeMs = nowMs;
+buildInfo.buildTimeStr = (new Date(nowMs)).toString();
+fs.writeFileSync(BUILD_INFO_PATH, JSON.stringify(buildInfo));
+
+// Exit
 process.exit(0);

@@ -9,8 +9,7 @@
   },
   "scripts": {
     "save-sha": "git rev-parse --short HEAD | xargs -I % printf '{\"sha\":\"%\"}' > ./build-info.json",
-    "build-badge": "node build-svg.js",
-    "build": "npm run save-sha && npm run build-badge && true",
+    "build": "npm run save-sha && node build.js",
     "start": "npm run build && ws"
   }
 }
