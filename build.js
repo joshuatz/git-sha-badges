@@ -1,5 +1,12 @@
 // @ts-check
 const fs = require('fs');
+const BUILD_DIR_PATH = './build';
+const BUILD_INFO_PATH = `${BUILD_DIR_PATH}/build-info.json`;
+
+// Make sure build dir exists
+if (!fs.existsSync(BUILD_DIR_PATH)) {
+	fs.mkdirSync(BUILD_DIR_PATH);
+}
 
 /** @param {string} sha */
 const getSvgStrings = (sha) => {
@@ -23,12 +30,11 @@ const getSvgStrings = (sha) => {
 
 
 // Retrieve SHA from JSON, insert into SVG string, and save as file
-const BUILD_INFO_PATH = './build-info.json';
 /** @type {{sha: string} & Record<string, any>} */
 const buildInfo = require(BUILD_INFO_PATH);
 const compiledBadges = getSvgStrings(buildInfo.sha);
-fs.writeFileSync('./badge-fancy.svg', compiledBadges.fancy);
-fs.writeFileSync('./badge-simple.svg', compiledBadges.simple);
+fs.writeFileSync(`${BUILD_DIR_PATH}/badge-fancy.svg`, compiledBadges.fancy);
+fs.writeFileSync(`${BUILD_DIR_PATH}/badge-simple.svg`, compiledBadges.simple);
 
 // Add build time to buildInfo file
 const nowMs = Date.now();

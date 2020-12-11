@@ -8,8 +8,8 @@
     "url": "https://joshuatz.com/?utm_source=package"
   },
   "scripts": {
-    "save-sha": "git rev-parse --short HEAD | xargs -I % printf '{\"sha\":\"%\"}' > ./build-info.json",
+    "save-sha": "git rev-parse --short HEAD | xargs -I % printf '{\"sha\":\"%\"}' > ./build/build-info.json",
     "build": "npm run save-sha && node build.js",
-    "start": "npm run build && ws"
+    "start": "npm run build && cd build && ws"
   }
 }
